@@ -33,8 +33,10 @@ class clientThread extends Thread {
             os = new PrintStream(clientSocket.getOutputStream());
 
 
-
             String name = "morethan12letters";
+
+            //J_ERR Her!
+
             while (name.length()>12 || valid(name) == false) {
                 os.println("Enter your name - max 12 letters! (Valid Input: A-Z, 0-9, comma, underscore): ");
                 name = is.readLine().trim();
@@ -48,8 +50,18 @@ class clientThread extends Thread {
                System.out.println(JOIN);
                */
             }
-            os.println("Hello " + name
-                    + " to our chat room.\nTo leave enter /quit in a new line");
+
+            os.println("Hello [" + name +"]"
+                    + " Hit Enter/Return-key to join chatroom");
+
+            String getJOIN = is.readLine();
+            System.out.println(getJOIN);
+            os.flush();
+            if(getJOIN.startsWith("JOIN")){
+                os.println("J_OK");
+            }
+
+            os.println("To leave type \"/quit\" and hit Enter/Return-key");
 
             showHeartbeat showHeartbeat = new showHeartbeat();
             showHeartbeat.name = name;
@@ -81,6 +93,7 @@ class clientThread extends Thread {
 
             while (true) {
                 String line = is.readLine();
+
                 if (line.startsWith("/quit")) {
                     break;
                 }
