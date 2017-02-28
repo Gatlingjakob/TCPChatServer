@@ -32,16 +32,18 @@ class clientThread extends Thread {
             is = new DataInputStream(clientSocket.getInputStream());
             os = new PrintStream(clientSocket.getOutputStream());
 
+            //Indtast brugernavn
 
             String name = "morethan12letters";
-
-            //J_ERR Her!
 
             while (name.length()>12 || valid(name) == false) {
                 os.println("Enter your name - max 12 letters! (Valid Input: A-Z, 0-9, comma, underscore): ");
                 name = is.readLine().trim();
-                
-                
+                //Check også i nedenstående if om name er en dublet
+                if(name.length()>12 || valid(name) == false) {
+                    os.println("J_ERR");
+                }
+
                /* if (name.startsWith("JOIN"))  {
                     System.out.println("");
                 }
@@ -53,15 +55,16 @@ class clientThread extends Thread {
 
             os.println("Hello [" + name +"]"
                     + " Hit Enter/Return-key to join chatroom");
+            os.write(name.getBytes());
 
             String getJOIN = is.readLine();
             System.out.println(getJOIN);
-            os.flush();
+
             if(getJOIN.startsWith("JOIN")){
                 os.println("J_OK");
             }
-
             os.println("To leave type \"/quit\" and hit Enter/Return-key");
+            os.println("Enter message: ");
 
             showHeartbeat showHeartbeat = new showHeartbeat();
             showHeartbeat.name = name;
@@ -91,6 +94,8 @@ class clientThread extends Thread {
                 }
             }
 
+            //Send beskeder
+
             while (true) {
                 String line = is.readLine();
 
@@ -106,17 +111,28 @@ class clientThread extends Thread {
                         + clientSocket.getInetAddress());
             }
 
+            //Print to all clients
+
             for (int i = 0; i < maxClientsCount; i++) {
                 if (threads[i] != null && threads[i] != this) {
                     threads[i].os.println(" The user [" + name
                             + "] has left the chat room.");
                 }
             }
+            //String QUIT = is.readLine();
+            //System.out.println("There should be sum quit here:" + QUIT); os.println("Server says Bye");
             TCPChatServer.removeFromClientList(client,name);
             System.out.println("User: [" + name + "] left the chatroom.");
-            os.println("You have left the chatroom.");
             os.println("Server says Bye");
+
+
             timer.cancel();
+
+            // Never reached? D:
+            //String QUIT = is.readLine();
+            //System.out.println("There should be sum quit here:" + QUIT);
+
+
 
       /*
        * Clean up. Set the current thread variable to null so that a new client
