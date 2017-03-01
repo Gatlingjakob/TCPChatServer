@@ -1,8 +1,6 @@
 package sample;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,8 +33,26 @@ class clientThread extends Thread {
             //Indtast brugernavn
 
             String name = "morethan12letters";
+            /*byte[] bytes = (is.readLine().getBytes());
+            ByteBuffer buffer = ByteBuffer.wrap(bytes);
+            int numBytes = buffer.position();
+            String hej = new String(bytes, 0, numBytes);
+            BufferedReader br=new BufferedReader(new InputStreamReader(is));*/
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String fromClient = (is.readLine());
+           // String StringFromInputStream = IOUtils.toString(is, "UTF-8");
 
-            while (name.length()>12 || valid(name) == false) {
+
+
+
+
+
+
+            System.out.println("This should be the first sentence: " + fromClient);
+
+            // if fromclient.startswith(JOIN) ---
+
+      /*      while (name.length()>12 || valid(name) == false) {
                 os.println("Enter your name - max 12 letters! (Valid Input: A-Z, 0-9, comma, underscore): ");
                 name = is.readLine().trim();
                 //Check også i nedenstående if om name er en dublet
@@ -50,8 +66,8 @@ class clientThread extends Thread {
                String JOIN = "JOIN {" + name + "}, {" +
                        clientSocket.getInetAddress() + "}:{" + clientSocket.getPort()+ "}";
                System.out.println(JOIN);
-               */
-            }
+
+            } */
 
             os.println("Hello [" + name +"]"
                     + " Hit Enter/Return-key to join chatroom");
