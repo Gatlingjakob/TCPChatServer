@@ -33,13 +33,14 @@ class clientThread extends Thread {
             //Indtast brugernavn
 
             String name = "morethan12letters";
-            /*byte[] bytes = (is.readLine().getBytes());
-            ByteBuffer buffer = ByteBuffer.wrap(bytes);
-            int numBytes = buffer.position();
-            String hej = new String(bytes, 0, numBytes);
-            BufferedReader br=new BufferedReader(new InputStreamReader(is));*/
+            byte[] bytes = new byte[1024];
+            is.readFully(bytes);
+            //ByteBuffer buffer = ByteBuffer.wrap(bytes);
+            //int numBytes = buffer.position();
+            //String hej = new String(bytes, 0, numBytes);
+          //  BufferedReader br=new BufferedReader(new InputStreamReader(is));*/
             BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            String fromClient = (is.readLine());
+            String fromClient = bytes.toString();
            // String StringFromInputStream = IOUtils.toString(is, "UTF-8");
 
 
